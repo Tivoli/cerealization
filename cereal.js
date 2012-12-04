@@ -1,5 +1,5 @@
 /*
- * Prepare data structures 
+ * Prepare data structures
  */
 var data_as_array = {
     foo: "bar",
@@ -14,33 +14,30 @@ var data_as_json = JSON.stringify(data_as_array);
  * Time dumping to string
  */
 
+var i = 1000000;
 console.log("Dumping:");
-var start = new Date();
-for(i=0; i<1000000; i++) {
-    JSON.stringify(data_as_array);
+console.time('  JSON to string');
+while (i--) {
+  JSON.stringify(data_as_array);
 }
-var fin = new Date();
-var run_time = (fin - start) / 1000; /* in seconds */
-console.log("  JSON: " + run_time);
+console.timeEnd('  JSON to string')
 
 /*
  * Time loading into native
  */
 
+i = 1000000;
 console.log("Loading:");
-var start = new Date();
-for(i=0; i<1000000; i++) {
-    JSON.parse(data_as_json);
+console.time('  String to JSON');
+while (i--) {
+  JSON.parse(data_as_json);
 }
-var fin = new Date();
-var run_time = (fin - start) / 1000; /* in seconds */
-console.log("  JSON: " + run_time);
+console.timeEnd('  String to JSON');
 
-var start = new Date();
+i = 1000000;
 var data_for_eval = '(' + data_as_json + ')';
-for(i=0; i<1000000; i++) {
-    eval(data_for_eval);
+console.time('  eval()');
+while (i--) {
+  eval(data_for_eval);
 }
-var fin = new Date();
-var run_time = (fin - start) / 1000; /* in seconds */
-console.log("  eval(): " + run_time);
+console.timeEnd('  eval()');
